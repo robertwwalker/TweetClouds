@@ -2,8 +2,10 @@
 
 export(Search2Cloud)
 export(Tweeter2Cloud)
+export(TweeterBiGram2Cloud)
 import(dplyr)
 import(rtweet)
 import(stringr)
+import(tidyr)
 import(tidytext)
 import(wordcloud2)
