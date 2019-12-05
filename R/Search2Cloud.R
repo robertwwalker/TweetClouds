@@ -6,11 +6,7 @@
 #' @export
 Search2Cloud <- function(searchT, n.enter = 3500) {
   local.tw <- search_tweets(searchT, n=n.enter)
-  save(local.tw, file="TW-temp.RData")
-  load("TW-temp.RData")
-  TweetDF <- local.tw %>% filter(is_retweet==FALSE)
-  TDF <- TweetDF %>% select(text)
-  # TDF contains the text of tweets.
+  TDF <- local.tw %>% filter(is_retweet==FALSE) %>% select(text) %>% mutate(text = as.character(text))
   clean_tweets <- data.frame(text=sapply(1:dim(TDF)[[1]], function(x) {tweet_cleaner(TDF[x,"text"])}))
   clean_tweets$text <- as.character(clean_tweets$text)
   Tweet.Words <- clean_tweets %>% unnest_tokens(., word, text) %>% anti_join(stop_words, "word")
