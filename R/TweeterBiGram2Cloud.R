@@ -38,6 +38,7 @@ TweeterBiGram2Cloud <- function(handle, n.tweets=5000, Bigrams=500) {
   bigram_counts <- bigrams_filtered %>% count(word1, word2, sort = TRUE)
   bigrams_united <- bigram_counts %>% unite(bigram, word1, word2, sep = " ")
   my.df <- bigrams_united[order(bigrams_united$n, decreasing=TRUE),]
-  my.df <- my.df[c(1:Bigrams),]
+  my.df <- my.df %>% filter(bigram != "NA NA")
+  my.df <- my.df %>% top_n(500)
   wordcloud2(my.df, color="random-light", backgroundColor = "black", size = 0.5)
 }
